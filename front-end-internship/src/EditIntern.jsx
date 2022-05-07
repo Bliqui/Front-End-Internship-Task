@@ -1,9 +1,13 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {useParams} from 'react-router';
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
-import {Input} from "./components/Input";
+import axios from 'axios';
+import {Input} from './components/Input';
 import {flushSync} from 'react-dom';
+import module from './Style.module.css';
+import backToListSvg from './img/back_to_list.svg';
+import calendarSvg from './img/calendar.svg';
+import mistakeSvg from './img/mistake.svg';
 
 const EditIntern = () => {
     const {id} = useParams();
@@ -73,22 +77,40 @@ const EditIntern = () => {
                         nameRef.current.value = '';
                         emailRef.current.value = '';
                     });
-            };
-        };
+            }
+            ;
+        }
+        ;
     };
 
     return (
-        <div>
-            <NavLink to="/">Back to list </NavLink>
-            <form onSubmit={updateDb}>
-                <label>{intern.name}</label>
-                <Input type={"text"} ref={nameRef} required name={"name"}/>
-                <label>{intern.email}</label>
-                <Input type={"email"} ref={emailRef} required name={"email"}/>
-                <Input type={"date"} id={"from"} ref={inputFrom} value={formatDate(intern.internshipStart)} required/>
-                <Input type={"date"} id={"to"} ref={inputTo} value={formatDate(intern.internshipEnd)} required/>
-                <button type="submit" value="Submit">Submit</button>
-            </form>
+        <div className={module.body}>
+            <div className={module.wrapper_invisible}>
+                <NavLink className={module.backToList} to="/">
+                    <img src={backToListSvg} alt="backToList"/>
+                    Back to list
+                </NavLink>
+            </div>
+            <div className={module.wrapper_edit}>
+                <div className={module.secondWrapper}>
+                <h1 className={module.title}>Edit</h1>
+                    <form className={module.internForm} onSubmit={updateDb}>
+                        <div className={module.form_column}>
+                            <label className={module.inputTitle}>Full name *</label>
+                            <Input className={module.textInput} value={intern.name} type={"text"} ref={nameRef} required name={"name"}/>
+                            <label className={module.inputTitle}>Email address *</label>
+                            <Input className={module.textInput} value={intern.email} type={"email"} ref={emailRef} required name={"email"}/>
+                        </div>
+                        <div className={module.form_row}>
+                            <Input className={module.dateInput} type={"date"} id={"from"} ref={inputFrom} value={formatDate(intern.internshipStart)}
+                                   required/>
+                            <Input className={module.dateInput} type={"date"} id={"to"} ref={inputTo} value={formatDate(intern.internshipEnd)} required/>
+                        </div>
+                            <button className={module.submitBtn} type="submit" value="Submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     );
 };

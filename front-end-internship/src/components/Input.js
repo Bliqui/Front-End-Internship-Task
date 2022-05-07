@@ -1,4 +1,4 @@
-import {forwardRef, useRef, useImperativeHandle, useState} from "react";
+import {forwardRef, useState} from "react";
 
 export const Input = forwardRef(({type, value, ...rest}, ref) => {
     const [state, setState] = useState(value || "");

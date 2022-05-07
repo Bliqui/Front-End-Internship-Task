@@ -1,0 +1,159 @@
+.body {
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    position: relative;
+}
+
+.wrapper {
+    width: 35%;
+
+    min-width: 280px;
+    margin: 136px auto 136px auto;
+
+    background-color: #F7F7F7;
+}
+
+.wrapper_edit {
+    width: 35%;
+
+    min-width: 280px;
+    margin: 60px auto 136px auto;
+
+    background-color: #F7F7F7;
+}
+
+.secondWrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 47px;
+    text-align: left;
+    padding: 40px 0 40px 0;
+}
+
+.list {
+    list-style: none;
+    width: 100%;
+    height: 80%;
+    display: inline-block;
+
+    padding: 0 0 40px 0;
+}
+
+.list_li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #EDEDED;
+    height: 64px;
+    padding: 0 20px 0 24px;
+
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+
+    border: solid transparent 2px;
+}
+
+.list_li:hover {
+    border: solid #222222 2px;
+
+}
+
+.list_li:nth-child(even) {
+    background-color: #F2F2F2;
+}
+
+.edit_btn {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: 500;
+    color: #000000;
+    font-size: 16px;
+
+    width: 60px;
+    text-decoration: none;
+}
+
+.wrapper_invisible {
+    width: 35%;
+    margin: 0 auto;
+}
+
+.backToList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 114px;
+    margin-top: 52px;
+    color: #222222;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.internForm {
+    padding-bottom: 52px;
+}
+
+.form_column {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputTitle {
+    font-size: 18px;
+    font-weight: 550;
+    line-height: 24px;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.textInput {
+    padding: 8px 12px;
+    border: solid 1px #222222;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 40px;
+
+}
+
+.textInput:focus {
+    outline: 1px black solid;
+}
+
+.form_row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dateInput {
+    padding: 8px 12px;
+    width: 45%;
+    border: 1px solid #222222;
+}
+
+.dateInput:focus {
+    outline: 1px black solid;
+}
+
+input::-webkit-calendar-picker-indicator {
+    background-image: url("./img/calendar.svg");
+}
+
+.submitBtn {
+    display: flex;
+    margin-top: 40px;
+    width: 40%;
+    padding: 12px 86px;
+    background-color: #222222;
+    color: #ffffff;
+}
