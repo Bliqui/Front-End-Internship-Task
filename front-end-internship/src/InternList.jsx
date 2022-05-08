@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import module from './Style.module.css';
 import pencilSvg from './img/drawing_pencil.svg';
-import logo from './img/logo.svg';
 
 const InternList = () => {
 
@@ -24,11 +23,12 @@ const InternList = () => {
                     <h1 className={module.title}>Participants</h1>
                     <ul className={module.list}>
                         {interns.map(u =>
-                            (<li className={module.list_li} key={u.id}>{u.name}
-                                <NavLink to={`/interns/${u.id}`} className={module.edit_btn}>
+                            (<NavLink to={`/interns/${u.id}`} key={u.id} className={module.edit_btn}>
+                                <li className={module.list_li}>
+                                    {u.name}
                                     <img src={pencilSvg} alt="pencil"/>
-                                </NavLink>
-                            </li>)
+                                </li>
+                            </NavLink>)
                         )}
                     </ul>
                 </div>

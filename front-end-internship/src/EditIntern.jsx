@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
 import module from './Style.module.css';
 import backToListSvg from './img/back_to_list.svg';

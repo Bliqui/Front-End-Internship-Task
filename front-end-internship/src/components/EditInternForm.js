@@ -1,32 +1,43 @@
-import module from "../Style.module.css";
-import {InputTitle} from "./inputTitle";
-import {Input} from "./Input";
-import React, {useEffect, useRef, useState} from "react";
-import {formatDate} from "../lib/formateDate";
-import axios from "axios";
-import {validateEmail} from "../lib/validateEmail";
-import {flushSync} from "react-dom";
-import {Loader} from "./Loader";
+import module from '../Style.module.css';
+import {InputTitle} from './inputTitle';
+import {Input} from './Input';
+import React, {useEffect, useState} from 'react';
+import {formatDate} from '../lib/formateDate';
+import axios from 'axios';
+import {validateEmail} from '../lib/validateEmail';
+import {flushSync} from 'react-dom';
+import {Loader} from './Loader';
 import {useParams, useNavigate} from "react-router-dom";
-import {compareDates} from '../lib/compareDates'
+import {compareDates} from '../lib/compareDates';
+import {useForm} from 'react-hook-form';
+import mistake from '../img/mistake.svg';
 import classNames from "classnames";
-import {toast, ToastContainer} from "react-toastify";
 
 export const EditInternForm = () => {
 
     const {id} = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [intern, setIntern] = useState({});
-    const nameRef = useRef(null);
-    const emailRef = useRef(null);
-    const inputFrom = useRef(null);
-    const inputTo = useRef(null);
     const [loader, setLoader] = useState(true);
 
+    const {
+        register,
+        onChange,
+        formState: {
+            errors,
+            isValid
+        },
+        handleSubmit, getValues, control
+    } = useForm({
+        mode: "all",
+    });
+
+    const inputTextClass = classNames(module.textInput, {[module.textInputMistakeOutline]: false});
+    const inputDateClass = classNames(module.dateInput, {[module.dateInputMistakeOutline]: compareDates(getValues().internshipEnd, getValues().internshipStart)});
+    const inputDateMistake = classNames(module.dateInputMistake, {[module.dateInputMistakeAlert]: compareDates(getValues().internshipEnd, getValues().internshipStart)});
+
     useEffect(() => {
-        console.log(id)
-        //TODO: get intern from REST api http://localhost:3001/interns/:id
         axios.get(`http://localhost:3001/interns/${id}`)
             .then((promise) => {
                 const {name, email, internshipStart, internshipEnd} = promise.data;
@@ -49,15 +60,13 @@ export const EditInternForm = () => {
     }, [id]);
 
     function updateDb(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const value = Object.fromEntries(formData.entries());
+        const value = e;
 
-        value.internshipStart = new Date(inputFrom.current.value).toISOString();
-        value.internshipEnd = new Date(inputTo.current.value).toISOString();
+        value.internshipStart = new Date(value.internshipStart).toISOString();
+        value.internshipEnd = new Date(value.internshipEnd).toISOString();
 
-        if (compareDates(inputFrom.current.value, inputTo.current.value)) {
-            if (validateEmail(emailRef.current.value)) {
+        if (compareDates(value.internshipStart, value.internshipEnd)) {
+            if (validateEmail(value.email)) {
                 return axios.put(`http://localhost:3001/interns/${id}`, value)
                     .then((response) => {
                         const {name, email, internshipStart, internshipEnd} = response.data
@@ -68,37 +77,75 @@ export const EditInternForm = () => {
                                 internshipStart,
                                 internshipEnd
                             });
-                        })
+                        });
+                        alert('Success')
                     });
             };
-        }
+        };
     };
 
     if (loader) {
         return <Loader/>
     }
     return (
-        <form className={module.internForm} onSubmit={updateDb}>
-            <ToastContainer />
+        <form className={module.internForm} onSubmit={handleSubmit(updateDb)}>
             <div className={module.form_column}>
                 <InputTitle title={"Full name *"}/>
-                <Input className={module.textInput} value={intern.name} type={"text"} ref={nameRef} required
-                       name={"name"}/>
+                <Input className={`${errors?.name && module.dateInputMistakeOutline} ${module.textInput}`} type={"text"}
+                       {...register('name', {
+                           required: true,
+                           value: intern.name,
+                           onChange: onChange
+                       })}/>
+                <div className={module.textInputMistake}>
+                    {errors?.name && <p>This field is required</p>}
+                </div>
                 <InputTitle title={"Email address *"}/>
-                <Input className={module.textInput} value={intern.email} type={"email"} ref={emailRef} required
-                       name={"email"}/>
+                <Input className={`${errors?.email && module.dateInputMistakeOutline} ${module.textInput}`} type={"email"}
+                       {...register('email', {
+                           required: true,
+                           value: intern.email,
+                           onChange: onChange
+                       })}/>
+                <div className={module.textInputMistake}>
+                    {errors?.email && <p>This field is required</p>}
+                </div>
             </div>
             <div className={module.form_row}>
-                <div id className={module.form_date_column}>
+                <div className={module.form_date_column}>
                     <InputTitle title={"Internship start *"}/>
-                    <Input className={`${module.dateInput} ${module.mistake}`} type={"date"} id={"from"} ref={inputFrom} value={formatDate(intern.internshipStart)} required />
+                    <div className={module.dateInputWrapper}>
+                        <div className={module.dateInputLine}></div>
+                        <Input className={module.dateInput} type={"date"}
+                               {...register('internshipStart', {
+                                   required: true,
+                                   value: formatDate(intern.internshipStart),
+                                   onChange: onChange
+                               })}
+                        />
+                    </div>
+                    <div className={module.dateInputMistake}>
+                        {errors?.internshipStart && <p>This date is not correct</p>}
+                    </div>
                 </div>
-                      <div className={module.form_date_column}>
-                          <InputTitle title={"Internship end *"}/>
-                          <Input className={module.dateInput} type={"date"} id={"to"} ref={inputTo} value={formatDate(intern.internshipEnd)} required/>
-                      </div>
+                <div className={module.form_date_column}>
+                    <InputTitle title={"Internship end *"}/>
+                    <div className={module.dateInputWrapper}>
+                        <div className={module.dateInputLine}></div>
+                        <Input className={inputDateClass} type={"date"}
+                               {...register('internshipEnd', {
+                                   required: true,
+                                   value: formatDate(intern.internshipEnd),
+                                   onChange: onChange
+                               })}
+                        />
+                    </div>
+                    <div className={inputDateMistake}>
+                        <p>This date is not correct</p>
+                    </div>
+                </div>
             </div>
-            <button className={module.submitBtn} type="submit" value="Submit">Submit</button>
+            <button className={module.submitBtn} disabled={!isValid} type="submit" value="Submit">Submit</button>
         </form>
     )
 };
