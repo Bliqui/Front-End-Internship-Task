@@ -1,7 +1,7 @@
 import {forwardRef, useState} from "react";
 
 export const Input = forwardRef(({type, value, ...rest}, ref) => {
-    const [state, setState] = useState(value || "");
+    const [state, setState] = useState(value || '');
 
     function onChange(e) {
         setState(e.target.value)
