@@ -1,4 +1,4 @@
-import module from '../Style.module.css'
+import module from '../styles/EditIntern.module.css'
 
 export const InputTitle = ({title}) => {
     return(

@@ -1,4 +1,4 @@
-import module from '../Style.module.css';
+import module from '../styles/EditIntern.module.css';
 import {InputTitle} from './inputTitle';
 import {Input} from './Input';
 import React, {useEffect, useState} from 'react';
@@ -10,8 +10,8 @@ import {Loader} from './Loader';
 import {useParams, useNavigate} from "react-router-dom";
 import {compareDates} from '../lib/compareDates';
 import {useForm} from 'react-hook-form';
-import mistake from '../img/mistake.svg';
 import classNames from "classnames";
+import mistake from '../img/mistake.svg'
 
 export const EditInternForm = () => {
 
@@ -28,14 +28,14 @@ export const EditInternForm = () => {
             errors,
             isValid
         },
-        handleSubmit, getValues, control
+        handleSubmit, getValues
     } = useForm({
         mode: "all",
     });
 
-    const inputTextClass = classNames(module.textInput, {[module.textInputMistakeOutline]: false});
     const inputDateClass = classNames(module.dateInput, {[module.dateInputMistakeOutline]: compareDates(getValues().internshipEnd, getValues().internshipStart)});
     const inputDateMistake = classNames(module.dateInputMistake, {[module.dateInputMistakeAlert]: compareDates(getValues().internshipEnd, getValues().internshipStart)});
+    const inputIconActive = classNames(module.dateMistakeIcon, {[module.dateMistakeIconActive]: compareDates(getValues().internshipEnd, getValues().internshipStart)})
 
     useEffect(() => {
         axios.get(`http://localhost:3001/interns/${id}`)
@@ -80,8 +80,8 @@ export const EditInternForm = () => {
                         });
                         alert('Success')
                     });
-            };
-        };
+            }
+        }
     };
 
     if (loader) {
@@ -97,9 +97,12 @@ export const EditInternForm = () => {
                            value: intern.name,
                            onChange: onChange
                        })}/>
+                <img className={`${errors?.name && module.textMistakeIconActive} ${module.textMistakeIcon}`} src={mistake} alt="mistake"/>
                 <div className={module.textInputMistake}>
                     {errors?.name && <p>This field is required</p>}
                 </div>
+            </div>
+            <div className={module.form_column}>
                 <InputTitle title={"Email address *"}/>
                 <Input className={`${errors?.email && module.dateInputMistakeOutline} ${module.textInput}`} type={"email"}
                        {...register('email', {
@@ -139,6 +142,7 @@ export const EditInternForm = () => {
                                    onChange: onChange
                                })}
                         />
+                        <img className={inputIconActive} src={mistake} alt="mistake"/>
                     </div>
                     <div className={inputDateMistake}>
                         <p>This date is not correct</p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import module from './Style.module.css';
+import module from './styles/EditIntern.module.css';
 import backToListSvg from './img/back_to_list.svg';
 import {EditInternForm} from './components/EditInternForm'
 

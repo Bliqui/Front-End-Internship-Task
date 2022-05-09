@@ -1,4 +1,4 @@
-import {forwardRef, useState} from "react";
+import {forwardRef} from "react";
 
 export const Input = forwardRef(({type, onChange, register, ...rest}, ref) => {
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import module from './Style.module.css';
+import module from './styles/InternList.module.css';
 import pencilSvg from './img/drawing_pencil.svg';
 
 const InternList = () => {

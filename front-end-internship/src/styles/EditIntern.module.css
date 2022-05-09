@@ -40,49 +40,6 @@
     padding: 40px 0 40px 0;
 }
 
-.list {
-    list-style: none;
-    width: 100%;
-    height: 80%;
-    display: inline-block;
-
-    padding: 0 0 40px 0;
-}
-
-.list_li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: #EDEDED;
-    height: 64px;
-    padding: 0 20px 0 24px;
-
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-
-    border: solid transparent 2px;
-}
-
-.list_li:hover {
-    border: solid #222222 2px;
-
-}
-
-.list_li:nth-child(even) {
-    background-color: #F2F2F2;
-}
-
-.edit_btn {
-    font-weight: 500;
-    color: #000000;
-    font-size: 16px;
-
-    width: 60px;
-    text-decoration: none;
-}
-
 .wrapper_invisible {
     width: 35%;
     margin: 0 auto;
@@ -107,6 +64,7 @@
 .form_column {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .inputTitle {
@@ -198,7 +156,7 @@
 }
 
 input::-webkit-calendar-picker-indicator {
-    background-image: url("./img/calendar.svg");
+    background-image: url("../img/calendar.svg");
     cursor: pointer;
 }
 
@@ -227,5 +185,33 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .mistake:after {
-    background: url("./img/mistake.svg");
+    background: url("../img/mistake.svg");
+}
+
+.textMistakeIcon {
+    position: absolute;
+    right: 2%;
+    top: 35%;
+    opacity: 0;
+}
+
+.textMistakeIconActive {
+    position: absolute;
+    right: 2%;
+    top: 35%;
+    opacity: 1;
+}
+
+.dateMistakeIcon {
+    position: absolute;
+    right: 25%;
+    top: 22%;
+    opacity: 0;
+}
+
+.dateMistakeIconActive {
+    position: absolute;
+    right: 25%;
+    top: 22%;
+    opacity: 1;
 }
