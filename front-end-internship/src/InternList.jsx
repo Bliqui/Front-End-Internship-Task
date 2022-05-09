@@ -24,7 +24,7 @@ const InternList = () => {
                     <ul className={module.list}>
                         {interns.map(u =>
                             (<NavLink to={`/interns/${u.id}`} key={u.id} className={module.edit_btn}>
-                                <li className={module.list_li}>
+                                <li className={module.list_li} style={u.id % 2 === 0 ? {backgroundColor: '#F2F2F2'} : null}>
                                     {u.name}
                                     <img src={pencilSvg} alt="pencil"/>
                                 </li>

@@ -67,11 +67,14 @@
 
 .list_li:hover {
     border: solid #222222 2px;
-
 }
 
 .list_li:nth-child(even) {
-    background-color: #F2F2F2;
+    background-color: #A3270C;
+}
+
+.list_li:not(:last-child) .list_li {
+    margin-right: 50px
 }
 
 .edit_btn {
