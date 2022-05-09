@@ -110,6 +110,7 @@ export const EditInternForm = () => {
                            value: intern.email,
                            onChange: onChange
                        })}/>
+                <img className={`${errors?.name && module.textMistakeIconActive} ${module.textMistakeIcon}`} src={mistake} alt="mistake"/>
                 <div className={module.textInputMistake}>
                     {errors?.email && <p>This field is required</p>}
                 </div>
